@@ -1,0 +1,30 @@
+# version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db 
+      - DB_USER=root
+      - DB_PASSWORD=123
+      - DB_NAME=movies
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: movies
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3301:3306"
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
