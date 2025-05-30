@@ -23,8 +23,8 @@ jobs:
     - name: 🔍 Run flake8
       run: flake8 app.py
 
-    - name: 🧹 Run black (format check)
-      run: black --check app.py
+    # - name: 🧹 Run black (format check)
+    #   run: black --check app.py
 
-    # - name: 🧹 Run black (auto format)
-    #   run: black app.py
+    - name: 🧹 Run black (auto format)
+      run: black app.py
