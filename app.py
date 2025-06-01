@@ -61,7 +61,8 @@ def insert():
 
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
-    query = "INSERT INTO movie(movie_id,movie_name,genre,year) VALUES (%s,%s,%s,%s)"
+    query = """INSERT INTO movie(movie_id, movie_name, genre, year)
+            VALUES (%s, %s, %s, %s)"""
     values = (movie_id, movie_name, genre, year)
     cursor.execute(query, values)
     rows = cursor.fetchall()
@@ -92,8 +93,8 @@ def search():
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
     query = """
-        SELECT movie_id,movie_name,genre,year from movie
-        WHERE genre LIKE %s OR year LIKE %s 
+        SELECT movie_id, movie_name, genre, year FROM movie
+        WHERE genre LIKE %s OR year LIKE %s
     """
     values = (f"%{keyword}%", f"%{keyword}%")
     cursor.execute(query, values)
@@ -102,7 +103,12 @@ def search():
     conn.close()
 
     result = [
-        {"movie_id": row[0], "movie_name": row[1], "genre": row[2], "year": row[3]}
+        {
+            "movie_id": row[0],
+            "movie_name": row[1],
+            "genre": row[2],
+            "year": row[3]
+        }
         for row in rows
     ]
     # print(result)
